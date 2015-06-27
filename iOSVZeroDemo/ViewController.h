@@ -7,9 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Braintree/Braintree.h>
 
 @interface ViewController : UIViewController
 
+@property(nonatomic,strong) Braintree *braintree;
+@property(nonatomic,strong) NSString *clientToken;
+@property(nonatomic,strong) NSString *transactionID;
+@property(nonatomic,strong) IBOutlet UIButton *btnPay;
+
+- (IBAction)callDropIn:(id)sender;
 
 @end
 
