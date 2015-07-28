@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>6E607A82-9A57-46E5-A402-924B4C6B59BA</string>
 	<key>IDESourceControlProjectName</key>
-	<string>project</string>
+	<string>iOSVZeroDemo</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>891E58D814E18AD059A0E0F8C8812A1D0517C627</key>
 		<string>https://github.com/jeffprestes/iOSVZeroDemo.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>iOSVZeroDemo/iOSVZeroDemo.xcodeproj/project.xcworkspace</string>
+	<string>iOSVZeroDemo/iOSVZeroDemo.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>891E58D814E18AD059A0E0F8C8812A1D0517C627</key>
