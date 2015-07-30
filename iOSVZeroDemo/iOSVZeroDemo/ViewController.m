@@ -49,13 +49,31 @@
 #pragma DropIn Call
 - (void) callDropIn:(id)sender  {
     
-}
-
-- (void) dropInViewControllerDidCancel:(BTDropInViewController *)viewController     {
+    self.braintree = [Braintree braintreeWithClientToken:self.clientToken];
+    
+    BTDropInViewController *dropInViewController = [self.braintree dropInViewControllerWithDelegate:self];
+    
+    dropInViewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
+                                                                                                          target:self
+                                                                                                          action:@selector(userDidCancelPayment)];
+    dropInViewController.summaryTitle = @"La Gioconda Copy";
+    dropInViewController.summaryDescription = @"Buy this nice and cheap copy of the famous La Gioconda picture";
+    dropInViewController.displayAmount = @"$ 1000.00";
+    
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:dropInViewController];
+    
+    [self presentViewController:navController animated:YES completion:nil];
     
 }
 
+- (void) dropInViewControllerDidCancel:(BTDropInViewController *)viewController     {
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+}
+
+#pragma Method called when DropIn returns
 - (void) dropInViewController:(BTDropInViewController *)viewController didSucceedWithPaymentMethod:(BTPaymentMethod *)paymentMethod     {
+    [self dismissViewControllerAnimated:YES completion:nil];
     
 }
 
