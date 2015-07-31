@@ -25,7 +25,6 @@
 }
 
 #pragma GetToken
-
 - (void) getBraintreeToken    {
     
     NSURL *clientTokenServerURL = [NSURL URLWithString:@"https://www.novatrix.com.br/bhdemo/token.php"];
@@ -73,8 +72,49 @@
 
 #pragma Method called when DropIn returns
 - (void) dropInViewController:(BTDropInViewController *)viewController didSucceedWithPaymentMethod:(BTPaymentMethod *)paymentMethod     {
+    [self postNonceToServer:paymentMethod.nonce];
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+
+- (void) postNonceToServer:(NSString *) nonce  {
     
+    NSURL *paymentUrl = [NSURL URLWithString:@"https://www.novatrix.com.br/bhdemo/checkout.php"];
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:paymentUrl];
+    [request setHTTPMethod:@"POST"];
+    [request setValue:@"text/plain" forHTTPHeaderField:@"Accept"];
+    [request setHTTPBody: [[NSString stringWithFormat:@"payment_method_nonce=%@&amount=1000", nonce] dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    [NSURLConnection sendAsynchronousRequest:request
+                                       queue:[NSOperationQueue mainQueue]
+                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+                               
+                               NSString *title;
+                               NSString *message;
+                               
+                               if (connectionError==nil && data != nil)     {
+                                   self.transactionId = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                                   title = @"Braintree's return";
+                                   message = self.transactionId;
+                                   self.btnPay.enabled = false;
+                                   self.btnPay.titleLabel.text = @"Buy it again!";
+                                   [self getBraintreeToken];
+                                   
+                               }    else    {
+                                   NSLog(@"Error when try to connect to server side to execute the transaction: %@", connectionError.description);
+                                   title = @"Error";
+                                   message = [NSString stringWithFormat:@"Error when try to connect to the Server: %@",connectionError.description];
+                                   
+                               }
+                               
+                               UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
+                                                                               message:message
+                                                                              delegate:nil
+                                                                     cancelButtonTitle:@ " OK "
+                                                                     otherButtonTitles:nil];
+                               [alert show];
+                           }];
 }
 
 @end
