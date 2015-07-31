@@ -1,8 +1,8 @@
 #Mobile Payments Workshop
 
-This is project-tutorial of **Mobile Payments Workshop for iOS** using [Braintree v.zero](https://www.braintreepayments.com/v.zero) and [DropIn](https://developers.braintreepayments.com/ios+php/guides/drop-in).
+This is project-tutorial of the **Mobile Payments Workshop for iOS** using [Braintree v.zero](https://www.braintreepayments.com/v.zero) and [DropIn](https://developers.braintreepayments.com/ios+php/guides/drop-in).
 
-Each step in this project-tutorial is a branch. You can clone, checkout step1 and following the instructions to do next exercises. If you want to compare your code with the project-tutorial in case of questions or copy the code from the tutorial to finish a step, you can feel free to do it.
+Each step in this project-tutorial is a branch. You can clone, checkout step1 and following the instructions to do the exercises. If you want to compare your code with the project-tutorial in case of questions or copy the code from the tutorial to finish a step, just checkout the desired branch.
 
 This project-tutorial does not cover the server-side part. To see server-side code used in this tutorial please look at my [Battlehack Demo](https://github.com/jeffprestes/bhdemo) where I have implemented it using PHP.
 
