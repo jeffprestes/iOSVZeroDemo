@@ -8,6 +8,9 @@ This project-tutorial does not cover the server-side part. To see server-side co
 
 To follow this tutorial you must have installed [CocoaPods](https://guides.cocoapods.org/using/getting-started.html). 
 
+If you want more details about Braintree iOS SDK to do the exercises, go to [Braintree Documentation](https://developers.braintreepayments.com/ios+php/start/hello-client).
+
+  
 ##List of content
 
 * [Step 1](https://github.com/jeffprestes/iOSVZeroDemo/tree/step1) - New Project
