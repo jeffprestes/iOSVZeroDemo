@@ -98,7 +98,7 @@
                                    title = @"Braintree's return";
                                    message = self.transactionId;
                                    self.btnPay.enabled = false;
-                                   self.btnPay.titleLabel.text = @"Buy it again!";
+                                   [self.btnPay setTitle:@"Buy it again!" forState:UIControlStateNormal];
                                    [self getBraintreeToken];
                                    
                                }    else    {
