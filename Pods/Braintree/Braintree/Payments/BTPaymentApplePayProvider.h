@@ -21,8 +21,6 @@
 /// @return An initialized Apple Pay provider
 - (instancetype)initWithClient:(BTClient *)client NS_DESIGNATED_INITIALIZER;
 
-- (id)init __attribute__((unavailable("Please use initWithClient:")));
-
 /// A required delegate that should receive notifications about the payment method
 /// creation lifecycle.
 ///
@@ -32,9 +30,15 @@
 #if BT_ENABLE_APPLE_PAY
 @property (nonatomic, strong) NSArray *paymentSummaryItems;
 @property (nonatomic, assign) PKAddressField requiredBillingAddressFields;
-@property (nonatomic, assign) ABRecordRef billingAddress;
 @property (nonatomic, assign) PKAddressField requiredShippingAddressFields;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+@property (nonatomic, assign) ABRecordRef billingAddress;
 @property (nonatomic, assign) ABRecordRef shippingAddress;
+#pragma clang diagnostic pop
+@property (nonatomic, strong) PKContact *billingContact;
+@property (nonatomic, strong) PKContact *shippingContact;
+
 @property (nonatomic, strong) NSArray *shippingMethods;
 @property (nonatomic, strong) NSArray *supportedNetworks;
 #endif

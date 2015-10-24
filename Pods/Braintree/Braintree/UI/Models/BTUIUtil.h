@@ -1,4 +1,4 @@
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @interface BTUIUtil : NSObject
 
@@ -14,4 +14,8 @@
 
 + (NSString *)stripNonExpiry:(NSString *)input;
 
+@end
+
+@interface UIViewController (BTUI_visibleViewController)
+- (UIViewController *)BTUI_visibleViewController;
 @end

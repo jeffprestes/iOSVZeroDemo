@@ -28,6 +28,72 @@ pod "Braintree/Apple-Pay"
 Then ensure `BT_ENABLE_APPLE_PAY=1` is present in your target's "Preprocessor Macros" settings.
 By default, this should happen automatically if you have a Preprocessor Macro entry for `$(inherited)`.
 
+## Updating for iOS 9
+
+**Xcode 7 is required.**
+
+### Supporting Bitcode
+
+The Braintree SDK works with apps that have [bitcode](https://developer.apple.com/library/prerelease/ios/documentation/IDEs/Conceptual/AppDistributionGuide/AppThinning/AppThinning.html#//apple_ref/doc/uid/TP40012582-CH35-SW3) enabled.
+
+However, if your integration uses `BTData` for fraud detection, it does not currently support having bitcode enabled. We are working to add support for this shortly.
+
+### App Transport Security
+
+iOS 9 introduces new security requirements and restrictions. If your app is compiled with iOS 9 SDK, it must comply with Apple's [App Transport Security](https://developer.apple.com/library/prerelease/ios/technotes/App-Transport-Security-Technote/) policy.
+
+The Braintree Gateway domain complies with this policy.
+
+If your app uses `BTData` (Kount), include the following under `NSExceptionDomains`:
+
+```
+  <key>kaptcha.com</key>
+    <dict>
+      <key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
+      <false/>
+      <key>NSIncludesSubdomains</key>
+      <true/>
+      <key>NSTemporaryExceptionMinimumTLSVersion</key>
+      <string>TLSv1.0</string>
+  </dict>
+```
+
+In the future, the SSL certificate will be updated so that your app will not require this exception.
+
+### URL Query Scheme Whitelist
+
+If your app is compiled with iOS 9 SDK and integrates payment options with an app-switch workflow, you must add URL schemes to the whitelist in your application's plist.
+
+If your app supports payments from PayPal:
+* `com.paypal.ppclient.touch.v1`
+* `com.paypal.ppclient.touch.v2`
+* `org-appextension-feature-password-management`
+
+If your app supports payments from Venmo:
+* `com.venmo.touch.v1`
+
+For example, if your app supports both PayPal and Venmo, you could add the following:
+```
+  <key>LSApplicationQueriesSchemes</key>
+  <array>
+    <string>com.venmo.touch.v1</string>
+    <string>com.paypal.ppclient.touch.v1</string>
+    <string>com.paypal.ppclient.touch.v2</string>
+    <string>org-appextension-feature-password-management</string>
+  </array>
+```
+
+There is a new `UIApplicationDelegate` method that you may implement on iOS 9:
+```
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString*, id> *)options
+```
+Implementing this method is optional. If you do not implement it, the deprecated equivalent will still be called; otherwise, it will not.
+
+In either case, you still need to implement the deprecated equivalent in order to support iOS 8 or earlier:
+```
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+```
+
 ## Help
 
 * [Read the headers](Braintree/Braintree.h)
@@ -47,3 +113,4 @@ Here are a few ways to get in touch:
 ### License
 
 The Braintree v.zero SDK is open source and available under the MIT license. See the [LICENSE](LICENSE) file for more info.
+
